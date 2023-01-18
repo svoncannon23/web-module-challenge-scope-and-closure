@@ -30,11 +30,29 @@ console.log('example task:', processFirstItem(['foo','bar'],function(str){return
   Study the code for counter1 and counter2, then answer the questions below.
   
   1. What is the difference between counter1 and counter2?
+
+  *In Counter 1, the variable 'count' is contained in the scope of the function counterMaker,
+  and the 2nd, lesser function 'counter()' uses it, to add 1 to the variable 'count' each time the function is used. 
+  The value will build on itself by 1 each time the function runs. 
+
+  *In Counter 2, the variable count is in the global scope of the function 'counter2', and because of that, and because there is no inner function that does anything else to the
+  variable "count", "count" will reset back to zero after the function has been used. Each time the function is used, the variable will be reset at 0, always only equaling 1 after
+  it is run.
   
   2. Which of the two uses a closure? How can you tell?
   
+  *They both have closure because the functions have access to the elements they need in order to run. 
+
+  *Counter 1 has variables within its functions scope. 
+  
+  *Counter 2 has a global varaible within it's scope. 
+  
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
+
+  *Counter1 would be best if you needed to manipulate a number several times in order to get the correct outcome: if you needed to add to the beginning number, then multiply the newly created number, etc. 
+ 
+  * Counter2 would be best if you needed your number to always start at zero when using the function.
 */
 
 // counter1 code
@@ -64,10 +82,12 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(){
+  return Math.floor(Math.random() * Math.floor(3))
 }
-
+console.log(inning())
+console.log(inning())
+console.log(inning())
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
 Use the finalScore function below to do the following:
@@ -83,10 +103,22 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*Code Here*/){
-  /*Code Here*/
+function finalScore(cb, num){
+
+  let homeScore = 0;
+  let awayScore = 0;
+
+  for (let i = 0; i <= num; i++){
+    homeScore = homeScore + cb();
+    awayScore = awayScore + cb();
+  }
+  return {
+    Home: homeScore, 
+    Away: awayScore
+  }
 }
 
+console.log(finalScore(inning, 9))
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
@@ -101,11 +133,14 @@ For example: invoking getInningScore(inning) might return this object:
   */
 
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(cb) {
+  return{
+    Away: cb(),
+    Home: cb(),
+  };
 
 }
-
+console.log(getInningScore(inning))
 
 /* STRETCH: ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
 Use the scoreboard function below to do the following:
